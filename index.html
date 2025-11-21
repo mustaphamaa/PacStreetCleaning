@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Street Cleaner</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div id="game-container">
+        <canvas id="gameCanvas"></canvas>
+
+        <div id="ui-layer">
+            <div id="score-display">Score: <span id="score-value">0</span></div>
+        </div>
+
+        <div id="welcome-screen" class="overlay active">
+            <div class="content">
+                <h1>STREET CLEANER</h1>
+                <p class="subtitle">Keep the streets clean. Avoid the traffic.</p>
+                <button id="start-btn">START ENGINE</button>
+            </div>
+        </div>
+
+        <div id="game-over-screen" class="overlay">
+            <div class="content">
+                <h1>GAME OVER</h1>
+                <p>You crashed into a car!</p>
+                <p>Score: <span id="final-score">0</span></p>
+                <button id="restart-btn">TRY AGAIN</button>
+            </div>
+        </div>
+
+        <div id="level-complete-screen" class="overlay">
+            <div class="content">
+                <h1>LEVEL COMPLETE!</h1>
+                <p>Great job cleaning the streets!</p>
+                <button id="next-level-btn">NEXT LEVEL</button>
+            </div>
+        </div>
+    </div>
+    </div>
+    <!-- Scripts loaded in order -->
+    <script src="src/utils/Input.js"></script>
+    <script src="src/Level.js"></script>
+    <script src="src/entities/Leaf.js"></script>
+    <script src="src/entities/Car.js"></script>
+    <script src="src/entities/Player.js"></script>
+    <script src="src/Game.js"></script>
+    <script src="src/main.js"></script>
+</body>
+
+</html>
