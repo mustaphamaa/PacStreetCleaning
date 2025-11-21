@@ -99,14 +99,87 @@ class Car {
     }
 
     draw(context) {
-        context.fillStyle = this.color;
-        context.fillRect(this.x, this.y, this.width, this.height);
-
-        context.fillStyle = 'rgba(0,0,0,0.3)';
-        if (this.type === 'moving') {
-            context.fillRect(this.x + 5, this.y + 5, this.width - 10, this.height - 10);
+        if (this.type === 'parked') {
+            // Parked car - sedan style
+            const gradient = context.createLinearGradient(this.x, this.y, this.x, this.y + this.height);
+            gradient.addColorStop(0, '#4ADE80');
+            gradient.addColorStop(1, '#22C55E');
+            
+            // Car body
+            context.fillStyle = gradient;
+            context.fillRect(this.x, this.y + 4, this.width, this.height - 8);
+            
+            // Car roof
+            context.fillStyle = '#16A34A';
+            context.fillRect(this.x + 3, this.y + 6, this.width - 6, this.height - 12);
+            
+            // Windows
+            context.fillStyle = '#60A5FA';
+            context.fillRect(this.x + 4, this.y + 7, this.width - 8, 4);
+            
+            // Wheels
+            context.fillStyle = '#1a1a1a';
+            context.fillRect(this.x - 1, this.y + 2, 3, 4);
+            context.fillRect(this.x + this.width - 2, this.y + 2, 3, 4);
+            context.fillRect(this.x - 1, this.y + this.height - 6, 3, 4);
+            context.fillRect(this.x + this.width - 2, this.y + this.height - 6, 3, 4);
+            
         } else {
-            context.fillRect(this.x + 2, this.y + 2, this.width - 4, this.height - 4);
+            // Moving car - sports car style with motion
+            const gradient = context.createLinearGradient(this.x, this.y, this.x, this.y + this.height);
+            gradient.addColorStop(0, '#FF6347');
+            gradient.addColorStop(1, '#DC143C');
+            
+            // Car body with rounded edges
+            context.fillStyle = gradient;
+            context.beginPath();
+            context.roundRect(this.x, this.y + 3, this.width, this.height - 6, 2);
+            context.fill();
+            
+            // Spoiler/roof accent
+            context.fillStyle = '#8B0000';
+            context.fillRect(this.x + 2, this.y + 5, this.width - 4, this.height - 10);
+            
+            // Window
+            context.fillStyle = '#1a1a1a';
+            context.fillRect(this.x + 3, this.y + 6, this.width - 6, 3);
+            
+            // Wheels
+            context.fillStyle = '#000';
+            context.beginPath();
+            context.arc(this.x + 3, this.y + this.height - 4, 2.5, 0, Math.PI * 2);
+            context.fill();
+            context.beginPath();
+            context.arc(this.x + this.width - 3, this.y + this.height - 4, 2.5, 0, Math.PI * 2);
+            context.fill();
+            
+            // Motion lines for moving car
+            context.strokeStyle = 'rgba(255, 99, 71, 0.3)';
+            context.lineWidth = 1;
+            for (let i = 0; i < 3; i++) {
+                const offset = i * 3;
+                if (this.vx > 0) {
+                    context.beginPath();
+                    context.moveTo(this.x - 5 - offset, this.y + 5 + i * 3);
+                    context.lineTo(this.x - 2 - offset, this.y + 5 + i * 3);
+                    context.stroke();
+                } else if (this.vx < 0) {
+                    context.beginPath();
+                    context.moveTo(this.x + this.width + 2 + offset, this.y + 5 + i * 3);
+                    context.lineTo(this.x + this.width + 5 + offset, this.y + 5 + i * 3);
+                    context.stroke();
+                } else if (this.vy > 0) {
+                    context.beginPath();
+                    context.moveTo(this.x + 5 + i * 3, this.y - 5 - offset);
+                    context.lineTo(this.x + 5 + i * 3, this.y - 2 - offset);
+                    context.stroke();
+                } else if (this.vy < 0) {
+                    context.beginPath();
+                    context.moveTo(this.x + 5 + i * 3, this.y + this.height + 2 + offset);
+                    context.lineTo(this.x + 5 + i * 3, this.y + this.height + 5 + offset);
+                    context.stroke();
+                }
+            }
         }
     }
 }
