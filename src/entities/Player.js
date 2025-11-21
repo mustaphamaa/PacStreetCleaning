@@ -31,15 +31,46 @@ class Player {
     }
 
     draw(context) {
-        context.fillStyle = '#FFD700'; // Safety Yellow
+        // Truck body with gradient
+        const gradient = context.createLinearGradient(this.x, this.y, this.x, this.y + this.height);
+        gradient.addColorStop(0, '#FFE44D');
+        gradient.addColorStop(1, '#FFD700');
+        
+        // Main truck body
+        context.fillStyle = gradient;
         context.fillRect(this.x, this.y, this.width, this.height);
-
-        // Add some truck details
-        context.fillStyle = 'black';
-        // Wheels
-        context.fillRect(this.x - 1, this.y + 3, 2, 5);
-        context.fillRect(this.x + this.width - 1, this.y + 3, 2, 5);
-        context.fillRect(this.x - 1, this.y + this.height - 8, 2, 5);
-        context.fillRect(this.x + this.width - 1, this.y + this.height - 8, 2, 5);
+        
+        // Cab (front part)
+        context.fillStyle = '#FFC700';
+        context.fillRect(this.x, this.y, this.width * 0.4, this.height * 0.6);
+        
+        // Window
+        context.fillStyle = '#87CEEB';
+        context.fillRect(this.x + 2, this.y + 2, this.width * 0.3, this.height * 0.25);
+        
+        // Wheels with rim detail
+        context.fillStyle = '#1a1a1a';
+        const wheelSize = 5;
+        // Left wheels
+        context.beginPath();
+        context.arc(this.x + 3, this.y + this.height - 3, wheelSize/2, 0, Math.PI * 2);
+        context.fill();
+        context.beginPath();
+        context.arc(this.x + this.width - 3, this.y + this.height - 3, wheelSize/2, 0, Math.PI * 2);
+        context.fill();
+        
+        // Wheel rims
+        context.fillStyle = '#666';
+        context.beginPath();
+        context.arc(this.x + 3, this.y + this.height - 3, wheelSize/4, 0, Math.PI * 2);
+        context.fill();
+        context.beginPath();
+        context.arc(this.x + this.width - 3, this.y + this.height - 3, wheelSize/4, 0, Math.PI * 2);
+        context.fill();
+        
+        // Outline for depth
+        context.strokeStyle = '#CC9900';
+        context.lineWidth = 1;
+        context.strokeRect(this.x, this.y, this.width, this.height);
     }
 }
